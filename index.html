@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Word & Keyword Frequency Analyzer (EN/DE/BCS) – SEO Text Tool</title>
+  <meta name="description" content="Analyze word and keyword frequency directly in your browser. Supports English, German, and Serbian/Croatian/Bosnian. Great for writers, bloggers, SEO and editors. No upload, no login." />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#2563eb" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div>
+        <h1>Word & Keyword Frequency Analyzer</h1>
+        <p>Multilingual, privacy-first (EN / DE / BCS).</p>
+      </div>
+      <div class="header-controls">
+        <label for="language-select">Language:</label>
+        <select id="language-select">
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+          <option value="sx">Serbian/Croatian/Bosnian</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <!-- LEFT -->
+    <section class="panel input-panel">
+      <h2>Input</h2>
+      <p class="hint">Tip: switch “Phrase counting” to Bigrams to spot repeating phrases (SEO / style).</p>
+      <textarea id="text-input" rows="14" placeholder="Paste or type your text here…"></textarea>
+      <div class="input-actions">
+        <button id="paste-button" type="button">Paste from Clipboard</button>
+        <label for="file-upload" class="button-like">Upload .txt or .md</label>
+        <input id="file-upload" type="file" accept=".txt,.md" style="display:none" />
+      </div>
+      <p class="privacy-note">Your text never leaves this page.</p>
+      <p id="large-text-warning" class="warning" style="display:none;">Large text detected. Processing may take a moment…</p>
+
+      <h3>Options</h3>
+      <div class="options-grid">
+        <label>
+          Case handling
+          <select id="case-handling">
+            <option value="lowercase_all">Lowercase all</option>
+            <option value="keep_case">Keep case</option>
+          </select>
+        </label>
+        <label>
+          <input type="checkbox" id="strip-punctuation" checked />
+          Strip punctuation
+        </label>
+        <label>
+          <input type="checkbox" id="ignore-numbers" checked />
+          Ignore numbers
+        </label>
+        <label>
+          Min word length
+          <input type="number" id="min-word-length" value="3" min="1" max="10" />
+        </label>
+        <label>
+          <input type="checkbox" id="stopword-filtering" checked />
+          Filter stopwords
+        </label>
+        <label>
+          Phrase counting
+          <select id="phrase-counting">
+            <option value="off">Off</option>
+            <option value="bigrams">Bigrams (2 words)</option>
+            <option value="trigrams">Trigrams (3 words)</option>
+          </select>
+        </label>
+        <label>
+          Exclude words (comma-separated)
+          <input type="text" id="exclude-custom-words" placeholder="just, really, very" />
+        </label>
+      </div>
+
+      <button id="analyze-button" class="primary-button" type="button">Analyze Text</button>
+    </section>
+
+    <!-- RIGHT -->
+    <section class="panel results-panel">
+      <h2>Results</h2>
+      <div id="stats-panel" class="stats-panel">
+        <div class="stat">Total words: <span id="stat-total-words">0</span></div>
+        <div class="stat">Unique words: <span id="stat-unique-words">0</span></div>
+        <div class="stat">Stopwords removed: <span id="stat-stopwords-removed">0</span></div>
+        <div class="stat">Most frequent: <span id="stat-most-frequent-word">-</span></div>
+        <div class="stat">Language: <span id="stat-language-used">English</span></div>
+        <div class="stat">Analysis time: <span id="stat-analysis-time">0</span> ms</div>
+      </div>
+
+      <!-- word table -->
+      <div class="table-block">
+        <div class="table-title-row">
+          <h3>Word frequency</h3>
+          <div class="table-controls">
+            <input id="word-filter-input" type="text" placeholder="Filter words…" />
+            <select id="word-page-size">
+              <option value="20">Top 20</option>
+              <option value="50" selected>Top 50</option>
+              <option value="100">Top 100</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table id="word-frequency-table" class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Word</th>
+                <th>Count</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4">No data yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button id="word-prev-page" type="button">Prev</button>
+          <span id="word-pagination-info"></span>
+          <button id="word-next-page" type="button">Next</button>
+        </div>
+      </div>
+
+      <!-- phrase table -->
+      <div id="phrase-frequency-section" class="table-block" style="display:none;">
+        <div class="table-title-row">
+          <h3>Phrase frequency</h3>
+          <div class="table-controls">
+            <input id="phrase-filter-input" type="text" placeholder="Filter phrases…" />
+            <select id="phrase-page-size">
+              <option value="20">Top 20</option>
+              <option value="50" selected>Top 50</option>
+              <option value="100">Top 100</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table id="phrase-frequency-table" class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Phrase</th>
+                <th>Count</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4">No data yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button id="phrase-prev-page" type="button">Prev</button>
+          <span id="phrase-pagination-info"></span>
+          <button id="phrase-next-page" type="button">Next</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>Created by <strong>Sinisa Bozic</strong></p>
+      <p>
+  <a href="mailto:modblaises@proton.me">Suggestions and comments</a> are appreciated!
+</p>
+
+      <div class="donation-link">
+        <a href="https://buymeacoffee.com/sbozich" target="_blank" rel="noopener">
+          <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+               alt="Buy Me A Coffee" style="height: 50px; width: 180px;">
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- bump version so browser pulls new file -->
+  <script src="main.js?v=6"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').catch(console.error);
+    }
+  </script>
+</body>
+</html>
