@@ -4,13 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Word & Keyword Frequency Analyzer (EN/DE/BCS) – SEO Text Tool</title>
-  <meta name="description" content="Analyze word and keyword frequency directly in your browser. Supports English, German, and Serbian/Croatian/Bosnian. Great for writers, bloggers, SEO and editors. No upload, no login." />
+  <title>TextMetricSEO — Word & Phrase Frequency Analyzer | Keyword Density Tool</title>
 
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Analyze word and phrase frequency, keyword density, and text patterns in English, German, and Serbian/Croatian/Bosnian — all in your browser, with no uploads or logins." />
+  <meta name="keywords" content="text analyzer, SEO keyword tool, word frequency, phrase frequency, keyword density checker, textmetricseo, multilingual word counter" />
+  <meta name="author" content="Sinisa Bozic" />
+
+  <!-- Canonical URL (prevents duplicate indexing) -->
+  <link rel="canonical" href="https://www.textmetricseo.com/" />
+
+  <!-- Open Graph for social sharing -->
+  <meta property="og:title" content="TextMetricSEO — Word & Phrase Frequency Analyzer" />
+  <meta property="og:description" content="Free, privacy-friendly word and phrase frequency analyzer. Ideal for SEO, editing, and content optimization." />
+  <meta property="og:url" content="https://www.textmetricseo.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.textmetricseo.com/assets/preview.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TextMetricSEO — Word & Phrase Frequency Analyzer" />
+  <meta name="twitter:description" content="Analyze text and keyword frequency instantly in your browser — multilingual and private." />
+  <meta name="twitter:image" content="https://www.textmetricseo.com/assets/preview.png" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" href="/icon-192.png" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Theme color for mobile -->
   <meta name="theme-color" content="#2563eb" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
+
 <body>
   <header class="site-header">
     <div class="container header-content">
@@ -192,5 +219,7 @@
       navigator.serviceWorker.register('service-worker.js').catch(console.error);
     }
   </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN"}'></script>
+
 </body>
 </html>
