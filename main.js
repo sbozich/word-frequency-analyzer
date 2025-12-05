@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const textInput = document.getElementById('text-input');
   const analyzeButton = document.getElementById('analyze-button');
   const languageSelect = document.getElementById('language-select');
+  const themeToggle = document.getElementById('theme-toggle');
   const caseHandlingSelect = document.getElementById('case-handling');
   const stripPunctuationCheckbox = document.getElementById('strip-punctuation');
   const ignoreNumbersCheckbox = document.getElementById('ignore-numbers');
@@ -34,8 +35,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const phrasePrevPageButton = document.getElementById('phrase-prev-page');
   const phraseNextPageButton = document.getElementById('phrase-next-page');
 
+    // set initial document language
+  if (languageSelect) {
+    document.documentElement.setAttribute('lang', languageSelect.value);
+  }
+
+
   const fileUploadInput = document.getElementById('file-upload');
   const pasteButton = document.getElementById('paste-button');
+
+    // ----- theme handling -----
+  const THEME_STORAGE_KEY = 'tmseo-theme';
+
+  function applyTheme(mode) {
+    document.body.classList.toggle('dark', mode === 'dark');
+    if (themeToggle) {
+      themeToggle.textContent = mode === 'dark' ? 'Light mode' : 'Dark mode';
+    }
+  }
+
+  let currentTheme = localStorage.getItem(THEME_STORAGE_KEY);
+  if (!currentTheme) {
+    const prefersDark =
+      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    currentTheme = prefersDark ? 'dark' : 'light';
+  }
+  applyTheme(currentTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
+      applyTheme(currentTheme);
+    });
+  }
 
   // ----- state -----
   let currentStopwords = new Set();
@@ -177,6 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+
+
   function renderTable(type) {
     const data = type === 'word' ? currentWordResults : currentPhraseResults;
     const totalWords = parseInt(statTotalWords.textContent, 10) || 0;
@@ -282,7 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ----- events -----
   analyzeButton.addEventListener('click', handleAnalysis);
-  languageSelect.addEventListener('change', handleAnalysis);
+  languageSelect.addEventListener('change', () => {
+    document.documentElement.setAttribute('lang', languageSelect.value);
+    handleAnalysis();
+  });
   caseHandlingSelect.addEventListener('change', handleAnalysis);
   stripPunctuationCheckbox.addEventListener('change', handleAnalysis);
   ignoreNumbersCheckbox.addEventListener('change', handleAnalysis);

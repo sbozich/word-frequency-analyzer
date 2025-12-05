@@ -9,6 +9,17 @@
   --radius-lg: 0.75rem;
 }
 
+body.dark {
+  --bg: #020617;
+  --panel: #020617;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #1f2937;
+  --primary: #60a5fa;
+  --primary-dark: #3b82f6;
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -28,9 +39,35 @@ body {
 }
 
 .site-header {
-  background: #ffffff;
+  background: var(--panel);
   border-bottom: 1px solid var(--border);
 }
+
+/* Small app name in the top bar */
+.site-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Big hero section under the header */
+.hero {
+  width: min(1200px, 100%);
+  margin: 1.5rem auto 0.5rem;
+  padding: 0 1rem;
+}
+
+.hero-title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.hero-tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
 
 .header-content {
   display: flex;
@@ -44,8 +81,10 @@ body {
   padding: 0.4rem 0.6rem;
   border: 1px solid var(--border);
   border-radius: 0.4rem;
-  background: #fff;
+  background: var(--panel);
+  color: var(--text);
 }
+
 
 .main-grid {
   display: grid;
@@ -109,6 +148,23 @@ button:hover,
 .button-like {
   display: inline-block;
 }
+
+.theme-toggle {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.theme-toggle:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
 
 .privacy-note {
   font-size: 0.8rem;
@@ -246,12 +302,46 @@ button:hover,
 
 .site-footer {
   border-top: 1px solid var(--border);
-  background: #fff;
+  background: var(--panel);
   padding: 1rem 0;
   text-align: center;
   font-size: 0.8rem;
   color: var(--muted);
 }
+
+.footer-tools {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.footer-label {
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+
+
+body.dark .panel {
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+}
+
+body.dark .input-panel textarea {
+  background: #020617;
+  border-color: #1f2937;
+}
+
+body.dark .data-table {
+  background: #020617;
+}
+
+body.dark .data-table thead {
+  background: #111827;
+}
+
+body.dark .stat {
+  background: #020617;
+  border-color: #1f2937;
+}
+
 
 /* responsive */
 @media (max-width: 900px) {
@@ -309,3 +399,11 @@ button:hover,
   margin-top: 0.6rem;
 }
 
+.site-header .header-inner {
+  max-width: 900px; /* same as your .container default */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+}

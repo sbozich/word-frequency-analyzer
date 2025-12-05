@@ -29,7 +29,6 @@
   <!-- Icons -->
   <link rel="icon" type="image/png" href="/icon-192.png" />
   <link rel="apple-touch-icon" href="/icon-192.png" />
-  <link rel="manifest" href="/manifest.json" />
 
   <!-- Theme color for mobile -->
   <meta name="theme-color" content="#2563eb" />
@@ -39,22 +38,25 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container header-content">
-      <div>
-        <h1>Word & Keyword Frequency Analyzer</h1>
-        <p>Multilingual, privacy-first (EN / DE / BCS).</p>
-      </div>
-      <div class="header-controls">
-        <label for="language-select">Language:</label>
-        <select id="language-select">
-          <option value="en">English</option>
-          <option value="de">Deutsch</option>
-          <option value="sx">Serbian/Croatian/Bosnian</option>
-        </select>
-      </div>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="site-title"></div>
+    <div class="header-controls">
+      <label for="language-select">Language:</label>
+      <select id="language-select">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="sx">Serbian/Croatian/Bosnian</option>
+      </select>
+    <button id="theme-toggle" aria-label="Toggle dark mode">Dark mode</button>
     </div>
-  </header>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 class="hero-title">Word &amp; Keyword Frequency Analyzer</h1>
+  <p class="hero-tagline">Multilingual, privacy-first (EN / DE / BCS).</p>
+</section>
 
   <main class="container main-grid">
     <!-- LEFT -->
@@ -196,30 +198,46 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <p>Created by <strong>Sinisa Bozic</strong></p>
-      <p>
-  <a href="mailto:modblaises@proton.me">Suggestions and comments</a> are appreciated!
-</p>
+<footer class="site-footer">
+  <div class="container footer-content">
+    <p>Created by <strong>Sinisa Bozic</strong></p>
+    <p>
+      <a href="mailto:modblaises@proton.me">Suggestions and comments</a> are appreciated!
+    </p>
 
-      <div class="donation-link">
-        <a href="https://buymeacoffee.com/sbozich" target="_blank" rel="noopener">
-          <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-               alt="Buy Me A Coffee" style="height: 50px; width: 180px;">
-        </a>
-      </div>
+    <p class="footer-tools">
+      <span class="footer-label">Other tools:</span>
+      <a href="https://listcomparator.com/" target="_blank" rel="noopener">List Comparator</a>
+      ·
+      <a href="https://invocreator.com/" target="_blank" rel="noopener">Free Invoice Generator</a>
+    </p>
+
+    <div class="donation-link">
+      <a href="https://buymeacoffee.com/sbozich" target="_blank" rel="noopener">
+        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+             alt="Buy Me A Coffee" style="height: 50px; width: 180px;">
+      </a>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <!-- bump version so browser pulls new file -->
+
   <script src="main.js?v=6"></script>
   <script>
+    // Cleanup: unregister any previously installed service workers
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js').catch(console.error);
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(reg => reg.unregister());
+      });
     }
   </script>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN"}'></script>
+  <script 
+    defer 
+    src="https://static.cloudflareinsights.com/beacon.min.js" 
+    data-cf-beacon='{"token": "f33d24cd05024cf3b76416444ff25297"}'>
+  </script>
+
 
 </body>
 </html>
+
